@@ -1,0 +1,13 @@
+{
+  "siteName": "Leather Trade",
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About Us",
+    "contact": "Contact Us"
+  },
+  "footer": {
+    "copyright": "Copyright",
+    "rights": "All rights reserved"
+  }
+}
