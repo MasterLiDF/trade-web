@@ -1,0 +1,88 @@
+{
+  "breadcrumb": {
+    "home": "首页",
+    "current": "联系我们"
+  },
+  "hero": {
+    "subtitle": "联系我们",
+    "title": "联系方式"
+  },
+  "contactInfo": {
+    "address": {
+      "title": "公司地址",
+      "content": "广东省广州市花都区狮岭镇皮革产业园15栋"
+    },
+    "phone": {
+      "title": "联系电话",
+      "content": "+86 20 1234 5678",
+      "subContent": "周一至周五 9:00-18:00"
+    },
+    "email": {
+      "title": "电子邮箱",
+      "content": "sales@leather-trade.com",
+      "subContent": "24小时内回复"
+    }
+  },
+  "about": {
+    "subtitle": "关于我们",
+    "title": "广州皮革贸易有限公司",
+    "description": "我们拥有超过20年的皮革制造和出口经验，专注于高端全粒面皮、绒面革和特种皮革。我们的产品服务于欧洲、北美和亚洲的奢侈品牌、家具制造商和汽车供应商。我们致力于可持续发展和道德采购，确保每一块皮革都符合国际质量标准。",
+    "stats": {
+      "experience": {
+        "value": "20+",
+        "label": "年行业经验"
+      },
+      "countries": {
+        "value": "50+",
+        "label": "服务国家"
+      },
+      "clients": {
+        "value": "1000+",
+        "label": "满意客户"
+      }
+    },
+    "visual": {
+      "logo": "PREMIUM LEATHER",
+      "since": "始于2004"
+    }
+  },
+  "businessHours": {
+    "subtitle": "工作时间",
+    "title": "营业时间",
+    "officeHours": {
+      "title": "办公时间",
+      "weekdays": {
+        "day": "周一至周五",
+        "time": "9:00 - 18:00"
+      },
+      "saturday": {
+        "day": "周六",
+        "time": "9:00 - 12:00"
+      },
+      "sunday": {
+        "day": "周日",
+        "time": "休息"
+      }
+    },
+    "responseTime": {
+      "title": "响应时间",
+      "inquiry": {
+        "type": "询盘邮件",
+        "time": "24小时内"
+      },
+      "sample": {
+        "type": "样品请求",
+        "time": "48小时内"
+      },
+      "emergency": {
+        "type": "紧急联系",
+        "time": "全天候"
+      }
+    }
+  },
+  "cta": {
+    "title": "准备好开始您的项目了吗？",
+    "description": "立即联系我们，获取免费咨询和样品报价",
+    "button": "发送邮件"
+  }
+}

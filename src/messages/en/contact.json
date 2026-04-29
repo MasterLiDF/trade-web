@@ -1,0 +1,88 @@
+{
+  "breadcrumb": {
+    "home": "Home",
+    "current": "Contact"
+  },
+  "hero": {
+    "subtitle": "Get in Touch",
+    "title": "Contact Us"
+  },
+  "contactInfo": {
+    "address": {
+      "title": "Address",
+      "content": "Building 15, Leather Industry Park, Shiling Town, Huadu District, Guangzhou, Guangdong, China"
+    },
+    "phone": {
+      "title": "Phone",
+      "content": "+86 20 1234 5678",
+      "subContent": "Mon-Fri 9:00-18:00"
+    },
+    "email": {
+      "title": "Email",
+      "content": "sales@leather-trade.com",
+      "subContent": "24-hour response"
+    }
+  },
+  "about": {
+    "subtitle": "About Us",
+    "title": "Guangzhou Leather Trading Co., Ltd.",
+    "description": "With over 20 years of experience in leather manufacturing and export, we specialize in premium full-grain leather, suede, and exotic hides. Our products serve luxury brands, furniture manufacturers, and automotive suppliers across Europe, North America, and Asia. We are committed to sustainable practices and ethical sourcing, ensuring every piece meets international quality standards.",
+    "stats": {
+      "experience": {
+        "value": "20+",
+        "label": "Years Experience"
+      },
+      "countries": {
+        "value": "50+",
+        "label": "Countries Served"
+      },
+      "clients": {
+        "value": "1000+",
+        "label": "Happy Clients"
+      }
+    },
+    "visual": {
+      "logo": "PREMIUM LEATHER",
+      "since": "Since 2004"
+    }
+  },
+  "businessHours": {
+    "subtitle": "Working Hours",
+    "title": "Business Hours",
+    "officeHours": {
+      "title": "Office Hours",
+      "weekdays": {
+        "day": "Monday-Friday",
+        "time": "9:00 - 18:00"
+      },
+      "saturday": {
+        "day": "Saturday",
+        "time": "9:00 - 12:00"
+      },
+      "sunday": {
+        "day": "Sunday",
+        "time": "Closed"
+      }
+    },
+    "responseTime": {
+      "title": "Response Time",
+      "inquiry": {
+        "type": "Inquiry Email",
+        "time": "Within 24h"
+      },
+      "sample": {
+        "type": "Sample Request",
+        "time": "Within 48h"
+      },
+      "emergency": {
+        "type": "Emergency Contact",
+        "time": "Always available"
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to Start Your Project?",
+    "description": "Contact us today for a free consultation and sample quotation",
+    "button": "Send Email"
+  }
+}
