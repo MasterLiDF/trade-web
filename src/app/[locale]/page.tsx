@@ -1,5 +1,7 @@
+import Link from "next/link";
 import zhHome from "@/messages/zh/home.json";
 import enHome from "@/messages/en/home.json";
+import { productsList } from "@/data/products";
 
 const homeData: Record<string, typeof zhHome> = {
   zh: zhHome,
@@ -13,6 +15,7 @@ interface PageProps {
 export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
   const t = homeData[locale] || homeData.zh;
+  const isEn = locale === "en";
 
   return (
     <div className="min-h-screen bg-[#FAF8F5]">
@@ -94,9 +97,10 @@ export default async function HomePage({ params }: PageProps) {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {t.products.items.map((product, index) => (
-              <div
-                key={index}
+            {productsList.map((product) => (
+              <Link
+                key={product.id}
+                href={`/${locale}/products/${product.id}`}
                 className="group bg-[#FAF8F5] rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
               >
                 <div className="relative h-64 bg-[#E8E2D9] overflow-hidden">
@@ -111,16 +115,16 @@ export default async function HomePage({ params }: PageProps) {
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-medium text-[#2C1810] mb-1">
-                    {product.name}
+                    {isEn ? product.nameEn : product.nameZh}
                   </h3>
                   <p className="text-[#C9A87C] text-xs tracking-wider mb-3">
-                    {product.nameEn}
+                    {isEn ? product.nameZh : product.nameEn}
                   </p>
                   <p className="text-[#7A7A7A] text-sm leading-relaxed font-light">
-                    {product.description}
+                    {product.description.slice(0, 50)}...
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
