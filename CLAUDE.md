@@ -8,7 +8,6 @@
 - 状态管理：Redux Toolkit（@reduxjs/toolkit）
 - 样式：TailwindCSS
 - 国际化：next-i18next（多语言）
-- 后台管理UI库：headlessui
 ### 目录结构
 src/
 ├── app/            # 前端页面
