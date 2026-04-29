@@ -1,5 +1,9 @@
 {
   "siteName": "Leather Trade",
+  "metadata": {
+    "title": "Leather Trade - Premium Leather Products Supplier",
+    "description": "Over two decades dedicated to premium leather goods, providing high-quality leather materials and customized products for global customers."
+  },
   "nav": {
     "home": "Home",
     "products": "Products",

@@ -1,0 +1,17 @@
+{
+  "company": "皮革世家",
+  "tagline": "传承匠心 · 臻选品质",
+  "description": "专注高端皮革制品二十余年，为全球客户提供优质的皮革原料及成品定制服务。",
+  "navigation": "导航",
+  "navItems": [
+    { "label": "首页", "href": "/" },
+    { "label": "产品中心", "href": "/products" },
+    { "label": "联系我们", "href": "/contact" }
+  ],
+  "contact": "联系方式",
+  "address": "地址：中国广东省广州市白云区皮革城",
+  "phone": "电话：+86 20 8888 8888",
+  "email": "邮箱：info@leather-legacy.com",
+  "copyright": "版权所有 © 2024 皮革世家 保留所有权利",
+  "icp": "粤ICP备xxxxxxxx号"
+}

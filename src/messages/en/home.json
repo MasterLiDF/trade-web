@@ -1,7 +1,75 @@
 {
   "hero": {
-    "title": "High Quality Leather Supplier",
-    "subtitle": "Professional Leather Manufacturing & Export",
-    "cta": "View Products"
+    "tagline": "Premium Leather Supplier",
+    "title": "Leather Legacy",
+    "subtitle": "Since 2003",
+    "description": "Specializing in high-end leather R&D and production, providing exceptional quality leather materials for global brands",
+    "ctaPrimary": "View Products",
+    "ctaSecondary": "Contact Us"
+  },
+  "about": {
+    "tagline": "About Us",
+    "title": "Craftsmanship & Heritage",
+    "description1": "Founded in 2003, Leather Legacy is a comprehensive enterprise specializing in high-end leather research, production, and sales. We possess advanced tanning processes and a strict quality management system, with products covering cowhide, sheepskin, specialty leather, and more.",
+    "description2": "For two decades, we have adhered to the business philosophy of 'Quality First, Integrity Supreme' and established long-term stable partnerships with numerous renowned leather goods brands worldwide.",
+    "since": "SINCE 2003"
+  },
+  "products": {
+    "tagline": "Our Products",
+    "title": "Premium Leather Collection",
+    "viewAll": "View All Products",
+    "items": [
+      {
+        "name": "Full Grain Cowhide",
+        "nameEn": "Full Grain Cowhide",
+        "description": "Premium top-grain leather with natural grain and delicate texture"
+      },
+      {
+        "name": "Vegetable Tanned",
+        "nameEn": "Vegetable Tanned Leather",
+        "description": "Eco-friendly vegetable tanning process, warm color, durable"
+      },
+      {
+        "name": "Sheepskin Lining",
+        "nameEn": "Sheepskin Lining",
+        "description": "Ultra-soft sheepskin, breathable, comfortable, luxurious"
+      },
+      {
+        "name": "Crocodile Embossed",
+        "nameEn": "Crocodile Embossed",
+        "description": "Exquisite embossed craftsmanship, high-end fashion, business preferred"
+      }
+    ]
+  },
+  "advantages": {
+    "tagline": "Why Choose Us",
+    "title": "Our Advantages",
+    "items": [
+      {
+        "number": "20+",
+        "title": "Years Experience",
+        "description": "Over 20 years in leather industry"
+      },
+      {
+        "number": "50+",
+        "title": "Partner Brands",
+        "description": "Serving renowned global leather brands"
+      },
+      {
+        "number": "100%",
+        "title": "Quality Control",
+        "description": "Strict inspection ensuring every piece"
+      },
+      {
+        "number": "Global",
+        "title": "Export Network",
+        "description": "Products exported to Europe, America, Asia"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Looking Forward to Working With You",
+    "description": "Whether small batch customization or large-scale procurement, we provide professional leather solutions",
+    "button": "Inquire Now"
   }
 }

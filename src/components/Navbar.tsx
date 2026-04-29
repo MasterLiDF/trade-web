@@ -4,18 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
+import zhNavbar from "@/messages/zh/navbar.json";
+import enNavbar from "@/messages/en/navbar.json";
 
-interface NavItem {
-  label: string;
-  labelEn: string;
-  href: string;
-}
-
-const navItems: NavItem[] = [
-  { label: "首页", labelEn: "Home", href: "/" },
-  { label: "产品", labelEn: "Products", href: "/products" },
-  { label: "联系我们", labelEn: "Contact", href: "/contact" },
-];
+const navbarData: Record<string, typeof zhNavbar> = {
+  zh: zhNavbar,
+  en: enNavbar,
+};
 
 interface NavbarProps {
   lang?: "zh" | "en";
@@ -24,6 +19,13 @@ interface NavbarProps {
 export default function Navbar({ lang = "zh" }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const t = navbarData[lang] || navbarData.zh;
+
+  const navItems = [
+    { label: t.nav.home, href: "/" },
+    { label: t.nav.products, href: "/products" },
+    { label: t.nav.contact, href: "/contact" },
+  ];
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -46,10 +48,10 @@ export default function Navbar({ lang = "zh" }: NavbarProps) {
             </div>
             <div className="flex flex-col">
               <span className="text-[#2C1810] font-semibold text-lg tracking-wide group-hover:text-[#8B6914] transition-colors duration-300">
-                {lang === "zh" ? "皮革世家" : "Leather Legacy"}
+                {t.siteName}
               </span>
               <span className="text-[#8A8A8A] text-xs tracking-widest uppercase">
-                Premium Leather
+                {t.siteTagline}
               </span>
             </div>
           </Link>
@@ -66,7 +68,7 @@ export default function Navbar({ lang = "zh" }: NavbarProps) {
                     : "text-[#4A4A4A] hover:text-[#8B6914]"
                 }`}
               >
-                {lang === "zh" ? item.label : item.labelEn}
+                {item.label}
               </Link>
             ))}
           </nav>
@@ -122,7 +124,7 @@ export default function Navbar({ lang = "zh" }: NavbarProps) {
               }`}
               onClick={() => setMobileMenuOpen(false)}
             >
-              {lang === "zh" ? item.label : item.labelEn}
+              {item.label}
             </Link>
           ))}
           <div className="pt-4 mt-4 border-t border-[#E8E4DE]">

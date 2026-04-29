@@ -1,0 +1,17 @@
+{
+  "company": "Leather Legacy",
+  "tagline": "Heritage Craftsmanship · Premium Quality",
+  "description": "Over two decades dedicated to premium leather goods, providing quality leather materials and custom manufacturing services to clients worldwide.",
+  "navigation": "Navigation",
+  "navItems": [
+    { "label": "Home", "href": "/" },
+    { "label": "Products", "href": "/products" },
+    { "label": "Contact", "href": "/contact" }
+  ],
+  "contact": "Contact Us",
+  "address": "Address: Leather City, Baiyun District, Guangzhou, China",
+  "phone": "Tel: +86 20 8888 8888",
+  "email": "Email: info@leather-legacy.com",
+  "copyright": "Copyright © 2024 Leather Legacy. All Rights Reserved.",
+  "icp": ""
+}

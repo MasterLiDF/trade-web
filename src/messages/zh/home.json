@@ -1,7 +1,75 @@
 {
   "hero": {
-    "title": "高品质皮革供应商",
-    "subtitle": "专业皮革制造与出口",
-    "cta": "查看产品"
+    "tagline": "Premium Leather Supplier",
+    "title": "皮革世家",
+    "subtitle": "Leather Legacy",
+    "description": "专注高端皮革研发与生产，为全球品牌提供卓越品质的皮革材料",
+    "ctaPrimary": "查看产品",
+    "ctaSecondary": "联系我们"
+  },
+  "about": {
+    "tagline": "About Us",
+    "title": "匠心制革，传承经典",
+    "description1": "皮革世家成立于2003年，是一家专业从事高端皮革研发、生产与销售的综合性企业。我们拥有先进的制革工艺和严格的质量管理体系，产品涵盖牛皮、羊皮、特种皮革等多个品类。",
+    "description2": "二十年来，我们始终坚持'品质为先，诚信至上'的经营理念，与全球众多知名皮具品牌建立了长期稳定的合作关系。",
+    "since": "SINCE 2003"
+  },
+  "products": {
+    "tagline": "Our Products",
+    "title": "精选皮革产品",
+    "viewAll": "查看全部产品",
+    "items": [
+      {
+        "name": "全粒面牛皮",
+        "nameEn": "Full Grain Cowhide",
+        "description": "顶级头层牛皮，天然纹理，手感细腻"
+      },
+      {
+        "name": "植鞣革",
+        "nameEn": "Vegetable Tanned Leather",
+        "description": "环保植鞣工艺，色泽温润，经久耐用"
+      },
+      {
+        "name": "羊皮内里",
+        "nameEn": "Sheepskin Lining",
+        "description": "超软羊皮革，透气舒适，奢华质感"
+      },
+      {
+        "name": "鳄鱼压纹皮",
+        "nameEn": "Crocodile Embossed",
+        "description": "精致压纹工艺，高端时尚，商务首选"
+      }
+    ]
+  },
+  "advantages": {
+    "tagline": "Why Choose Us",
+    "title": "我们的优势",
+    "items": [
+      {
+        "number": "20年+",
+        "title": "行业经验",
+        "description": "深耕皮革行业二十余年"
+      },
+      {
+        "number": "50+",
+        "title": "合作品牌",
+        "description": "服务全球知名皮具品牌"
+      },
+      {
+        "number": "100%",
+        "title": "品质把控",
+        "description": "严格质检，确保每尺品质"
+      },
+      {
+        "number": "全球",
+        "title": "出口网络",
+        "description": "产品远销欧美亚各大洲"
+      }
+    ]
+  },
+  "cta": {
+    "title": "期待与您合作",
+    "description": "无论是小批量定制还是大规模采购，我们都能为您提供专业的皮革解决方案",
+    "button": "立即咨询"
   }
 }
