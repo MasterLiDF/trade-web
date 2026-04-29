@@ -8,13 +8,13 @@
 - 状态管理：Redux Toolkit（@reduxjs/toolkit）
 - 样式：TailwindCSS
 - 国际化：next-i18next（多语言）
-- 无数据库、产品数据写死
-- 无询盘表单提交功能
+- 后台管理UI库：headlessui
 ### 目录结构
 src/
-├── app/            # 前端页面（只有页面，没有后端）
-├── api/            # 全部 Node.js 后端代码放这里 ✅
-├── components/      # 组件
+├── app/            # 前端页面
+├    └── admin/     # 后台管理页面
+├── api/            # 全部 Node.js 后端代码放这里 
+├── components/     # 组件
 ├── lib/            # 工具、数据库、认证
 ├── messages/       # 多语言
 └── types/          # TS 类型
@@ -24,4 +24,6 @@ src/
 - 文件：`Page.tsx`, `Component.tsx`, `hooks/useX.ts`, `stores/`
 ## 多语言要求
 - 支持：中文 / 英文,路由：/zh,/en
+- /admin/*的是后台页面,所有文案固定中文即可，不需要国际化配置。
+
 
