@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { httpFetch } from '@/lib/fetch';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -43,21 +44,21 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/login', {
+      const result = await httpFetch('/api/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify(formData),
       });
-
-      const result = await response.json();
 
       if (!result.success) {
         setErrors({
           form: result.message,
         });
         return;
+      }
+
+      if (result.data?.token) {
+        localStorage.setItem('token',result.data.token)
+        localStorage.setItem('userInfo',JSON.stringify(result.data.userInfo))
       }
 
       router.push('/admin');
