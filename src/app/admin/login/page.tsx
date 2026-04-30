@@ -12,11 +12,12 @@ export default function LoginPage() {
   const [errors, setErrors] = useState<{
     username?: string;
     password?: string;
+    form?: string;
   }>({});
   const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = () => {
-    const newErrors: { username?: string; password?: string } = {};
+    const newErrors: { username?: string; password?: string; form?: string } = {};
 
     if (!formData.username.trim()) {
       newErrors.username = '请输入用户名';
@@ -42,15 +43,29 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      // TODO: 调用登录接口
-      console.log('登录信息:', formData);
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-      // 模拟登录成功
-      setTimeout(() => {
-        router.push('/admin');
-      }, 1000);
+      const result = await response.json();
+
+      if (!result.success) {
+        setErrors({
+          form: result.message,
+        });
+        return;
+      }
+
+      router.push('/admin');
     } catch (error) {
       console.error('登录失败:', error);
+      setErrors({
+        form: '登录失败，请稍后重试',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -131,6 +146,14 @@ export default function LoginPage() {
               </p>
             )}
           </div>
+
+          {errors.form && (
+            <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+              <p className="text-sm text-red-600 dark:text-red-400 text-center">
+                {errors.form}
+              </p>
+            </div>
+          )}
 
           <button
             type="submit"

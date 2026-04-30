@@ -11,8 +11,8 @@
 ### 目录结构
 src/
 ├── app/            # 前端页面
-├    └── admin/     # 后台管理页面
-├── api/            # 全部 Node.js 后端代码放这里 
+|    └── admin/     # 后台管理页面
+|    └── api/       # 全部 Node.js 后端代码放这里 
 ├── components/     # 组件
 ├── lib/            # 工具、数据库、认证
 ├── messages/       # 多语言
