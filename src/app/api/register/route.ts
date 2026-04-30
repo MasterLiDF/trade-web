@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import bcrypt from 'bcryptjs';
 import connectDB from '@/lib/db';
 import User from '@/models/User';
 import { ApiResponse } from '@/types/api';
@@ -73,10 +74,14 @@ export async function registerUser(
     };
   }
 
+  // 使用 bcryptjs 加密密码
+  const SALT_ROUNDS = 10;
+  const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
   // 创建新用户
   const newUser = new User({
     username,
-    password,
+    password: hashedPassword,
   });
 
   await newUser.save();
