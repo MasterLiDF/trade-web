@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Product from "@/models/Product";
 import { ApiResponse } from "@/types/api";
+import { verifyToken, unauthorizedResponse } from "@/lib/auth";
 
 interface CreateProductRequest {
   nameZh: string;
@@ -42,6 +43,12 @@ interface ProductResponseData {
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // 验证登录
+    const payload = verifyToken(request);
+    if (!payload) {
+      return unauthorizedResponse();
+    }
+
     await connectDB();
 
     const body: CreateProductRequest = await request.json();
@@ -286,6 +293,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 // PUT /api/product - 更新产品
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
+    // 验证登录
+    const payload = verifyToken(request);
+    if (!payload) {
+      return unauthorizedResponse();
+    }
+
     await connectDB();
 
     const body: UpdateProductRequest = await request.json();
@@ -368,6 +381,12 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
 // DELETE /api/product - 删除产品
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
+    // 验证登录
+    const payload = verifyToken(request);
+    if (!payload) {
+      return unauthorizedResponse();
+    }
+
     await connectDB();
 
     const { searchParams } = new URL(request.url);

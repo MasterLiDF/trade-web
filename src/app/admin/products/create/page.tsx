@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Plus, X, Upload } from 'lucide-react';
@@ -44,6 +44,8 @@ const initialFormData: FormData = {
   detailImages: [],
 };
 
+const token = localStorage.getItem('token');
+
 export default function CreateProductPage() {
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>(initialFormData);
@@ -55,6 +57,8 @@ export default function CreateProductPage() {
   const [detailImageUrls, setDetailImageUrls] = useState<string[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+  const detailImagesInputRef = useRef<HTMLInputElement>(null);
 
   // 获取分类列表
   useEffect(() => {
@@ -113,11 +117,14 @@ export default function CreateProductPage() {
 
   const uploadImage = async (file: File): Promise<string> => {
     const formData = new FormData();
-    formData.append('image', file);
 
+    formData.append('image', file);
     const response = await fetch('/api/upload', {
       method: 'POST',
       body: formData,
+      headers: {
+        Authorization: token?`Bearer ${token}`:''
+      },
     });
 
     const result = await response.json();
@@ -129,13 +136,16 @@ export default function CreateProductPage() {
     return result.data.urls[0];
   };
 
-  const deleteImage = async (url: string): Promise<void> => {
+  const deleteImages = async (urls: string[]): Promise<void> => {
+    if (urls.length === 0) return;
+
     const response = await fetch('/api/upload', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: token ? `Bearer ${token}` : ''
       },
-      body: JSON.stringify({ url }),
+      body: JSON.stringify({ urls }),
     });
 
     const result = await response.json();
@@ -149,6 +159,10 @@ export default function CreateProductPage() {
     const file = e.target.files?.[0];
     if (file) {
       try {
+        // 将旧图片加入待删除列表（如果存在）
+        if (coverImageUrl) {
+          setImagesToDelete((prev) => [...prev, coverImageUrl]);
+        }
         const url = await uploadImage(file);
         setCoverImagePreview(URL.createObjectURL(file));
         setCoverImageUrl(url);
@@ -178,20 +192,26 @@ export default function CreateProductPage() {
         alert('详情图上传失败: ' + (error instanceof Error ? error.message : '未知错误'));
       }
     }
+    // 重置 input 值，允许重复上传相同文件
+    if (detailImagesInputRef.current) {
+      detailImagesInputRef.current.value = '';
+    }
   };
 
-  const removeCoverImage = async () => {
+  const removeCoverImage = () => {
+    // 将已上传的图片加入待删除列表
     if (coverImageUrl) {
-      await deleteImage(coverImageUrl);
+      setImagesToDelete((prev) => [...prev, coverImageUrl]);
     }
     setCoverImagePreview('');
     setCoverImageUrl('');
   };
 
-  const removeDetailImage = async (index: number) => {
+  const removeDetailImage = (index: number) => {
     const urlToDelete = detailImageUrls[index];
+    // 将已上传的图片加入待删除列表
     if (urlToDelete) {
-      await deleteImage(urlToDelete);
+      setImagesToDelete((prev) => [...prev, urlToDelete]);
     }
     setDetailImagePreviews((prev) => prev.filter((_, i) => i !== index));
     setDetailImageUrls((prev) => prev.filter((_, i) => i !== index));
@@ -252,6 +272,10 @@ export default function CreateProductPage() {
       });
 
       if (result.success) {
+        // 保存成功后删除标记的图片
+        if (imagesToDelete.length > 0) {
+          await deleteImages(imagesToDelete);
+        }
         alert('产品创建成功');
         router.push('/admin/dashboard');
       } else {
@@ -487,6 +511,7 @@ export default function CreateProductPage() {
                   <Plus className="w-6 h-6 text-gray-400 mb-1" />
                   <span className="text-xs text-gray-500">添加图片</span>
                   <input
+                    ref={detailImagesInputRef}
                     type="file"
                     accept="image/*"
                     multiple

@@ -3,6 +3,7 @@ import { writeFile, unlink } from "fs/promises";
 import { existsSync, mkdirSync } from "fs";
 import path from "path";
 import { ApiResponse } from "@/types/api";
+import { verifyToken, unauthorizedResponse } from "@/lib/auth";
 
 interface UploadResponseData {
   urls: string[];
@@ -47,6 +48,12 @@ function generateFileName(originalName: string): string {
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // 验证登录
+    const payload = verifyToken(request);
+    if (!payload) {
+      return unauthorizedResponse();
+    }
+
     ensureUploadDir();
 
     const formData = await request.formData();
@@ -127,63 +134,74 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
+    // 验证登录
+    const payload = verifyToken(request);
+    if (!payload) {
+      return unauthorizedResponse();
+    }
+
     const body = await request.json();
-    const { url } = body;
+    const { urls } = body;
 
-    if (!url || typeof url !== "string") {
+    if (!urls || !Array.isArray(urls) || urls.length === 0) {
       const response: ApiResponse = {
         success: false,
-        message: "请提供要删除的图片路径",
+        message: "请提供要删除的图片路径数组",
         status: 400,
       };
       return NextResponse.json(response);
     }
 
-    // 从 URL 中提取文件名，防止目录遍历
-    const urlPath = url.startsWith("/") ? url.slice(1) : url;
-    const pathParts = urlPath.split("/");
-    const fileName = pathParts[pathParts.length - 1];
+    const results = { success: [] as string[], failed: [] as string[] };
 
-    // 只允许删除 uploads 目录下的文件
-    if (pathParts[0] !== "uploads" || !fileName) {
-      const response: ApiResponse = {
-        success: false,
-        message: "无效的图片路径",
-        status: 400,
-      };
-      return NextResponse.json(response);
+    for (const url of urls) {
+      if (typeof url !== "string" || !url) {
+        results.failed.push(url);
+        continue;
+      }
+
+      // 从 URL 中提取文件名，防止目录遍历
+      const urlPath = url.startsWith("/") ? url.slice(1) : url;
+      const pathParts = urlPath.split("/");
+      const fileName = pathParts[pathParts.length - 1];
+
+      // 只允许删除 uploads 目录下的文件
+      if (pathParts[0] !== "uploads" || !fileName) {
+        results.failed.push(url);
+        continue;
+      }
+
+      const filePath = path.join(UPLOAD_DIR, fileName);
+
+      // 安全检查：确保文件路径在 UPLOAD_DIR 内
+      const resolvedPath = path.resolve(filePath);
+      const resolvedUploadDir = path.resolve(UPLOAD_DIR);
+      if (!resolvedPath.startsWith(resolvedUploadDir)) {
+        results.failed.push(url);
+        continue;
+      }
+
+      // 检查文件是否存在
+      if (!existsSync(filePath)) {
+        results.failed.push(url);
+        continue;
+      }
+
+      try {
+        // 删除文件
+        await unlink(filePath);
+        results.success.push(url);
+      } catch {
+        results.failed.push(url);
+      }
     }
-
-    const filePath = path.join(UPLOAD_DIR, fileName);
-
-    // 安全检查：确保文件路径在 UPLOAD_DIR 内
-    const resolvedPath = path.resolve(filePath);
-    const resolvedUploadDir = path.resolve(UPLOAD_DIR);
-    if (!resolvedPath.startsWith(resolvedUploadDir)) {
-      const response: ApiResponse = {
-        success: false,
-        message: "无效的文件路径",
-        status: 400,
-      };
-      return NextResponse.json(response);
-    }
-
-    // 检查文件是否存在
-    if (!existsSync(filePath)) {
-      const response: ApiResponse = {
-        success: false,
-        message: "图片文件不存在",
-        status: 404,
-      };
-      return NextResponse.json(response);
-    }
-
-    // 删除文件
-    await unlink(filePath);
 
     const response: ApiResponse = {
-      success: true,
-      message: "图片删除成功",
+      success: results.failed.length === 0,
+      message:
+        results.failed.length === 0
+          ? `成功删除 ${results.success.length} 张图片`
+          : `删除完成：成功 ${results.success.length} 张，失败 ${results.failed.length} 张`,
       status: 200,
     };
     return NextResponse.json(response);

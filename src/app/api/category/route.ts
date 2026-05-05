@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Category from "@/models/Category";
 import { ApiResponse } from "@/types/api";
+import { verifyToken, unauthorizedResponse } from "@/lib/auth";
 
 interface CategoryRequest {
   nameZh: string;
@@ -55,6 +56,12 @@ export async function GET(): Promise<NextResponse> {
 // POST - 新增分类
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // 验证登录
+    const payload = verifyToken(request);
+    if (!payload) {
+      return unauthorizedResponse();
+    }
+
     await connectDB();
 
     const body: CategoryRequest = await request.json();
@@ -141,6 +148,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 // PUT - 编辑分类
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
+    // 验证登录
+    const payload = verifyToken(request);
+    if (!payload) {
+      return unauthorizedResponse();
+    }
+
     await connectDB();
 
     const body: CategoryRequest & { id: string } = await request.json();
@@ -253,6 +266,12 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
 // DELETE - 删除分类
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
+    // 验证登录
+    const payload = verifyToken(request);
+    if (!payload) {
+      return unauthorizedResponse();
+    }
+
     await connectDB();
 
     const { searchParams } = new URL(request.url);
