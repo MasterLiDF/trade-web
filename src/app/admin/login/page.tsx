@@ -61,7 +61,7 @@ export default function LoginPage() {
         localStorage.setItem('userInfo',JSON.stringify(result.data.userInfo))
       }
 
-      router.push('/admin');
+      router.push('/admin/dashboard');
     } catch (error) {
       console.error('登录失败:', error);
       setErrors({
