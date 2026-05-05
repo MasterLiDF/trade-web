@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
+import { writeFile, unlink } from "fs/promises";
 import { existsSync, mkdirSync } from "fs";
 import path from "path";
 import { ApiResponse } from "@/types/api";
@@ -118,6 +118,81 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const response: ApiResponse = {
       success: false,
       message: "图片上传失败，请稍后重试",
+      status: 500,
+    };
+
+    return NextResponse.json(response);
+  }
+}
+
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
+  try {
+    const body = await request.json();
+    const { url } = body;
+
+    if (!url || typeof url !== "string") {
+      const response: ApiResponse = {
+        success: false,
+        message: "请提供要删除的图片路径",
+        status: 400,
+      };
+      return NextResponse.json(response);
+    }
+
+    // 从 URL 中提取文件名，防止目录遍历
+    const urlPath = url.startsWith("/") ? url.slice(1) : url;
+    const pathParts = urlPath.split("/");
+    const fileName = pathParts[pathParts.length - 1];
+
+    // 只允许删除 uploads 目录下的文件
+    if (pathParts[0] !== "uploads" || !fileName) {
+      const response: ApiResponse = {
+        success: false,
+        message: "无效的图片路径",
+        status: 400,
+      };
+      return NextResponse.json(response);
+    }
+
+    const filePath = path.join(UPLOAD_DIR, fileName);
+
+    // 安全检查：确保文件路径在 UPLOAD_DIR 内
+    const resolvedPath = path.resolve(filePath);
+    const resolvedUploadDir = path.resolve(UPLOAD_DIR);
+    if (!resolvedPath.startsWith(resolvedUploadDir)) {
+      const response: ApiResponse = {
+        success: false,
+        message: "无效的文件路径",
+        status: 400,
+      };
+      return NextResponse.json(response);
+    }
+
+    // 检查文件是否存在
+    if (!existsSync(filePath)) {
+      const response: ApiResponse = {
+        success: false,
+        message: "图片文件不存在",
+        status: 404,
+      };
+      return NextResponse.json(response);
+    }
+
+    // 删除文件
+    await unlink(filePath);
+
+    const response: ApiResponse = {
+      success: true,
+      message: "图片删除成功",
+      status: 200,
+    };
+    return NextResponse.json(response);
+  } catch (error) {
+    console.error("删除图片错误:", error);
+
+    const response: ApiResponse = {
+      success: false,
+      message: "图片删除失败，请稍后重试",
       status: 500,
     };
 

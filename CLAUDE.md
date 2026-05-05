@@ -21,6 +21,7 @@ src/
 - 组件：函数式
 - 禁止：class组件、any类型
 - 文件：`Page.tsx`, `Component.tsx`, `hooks/useX.ts`, `stores/`
+- 接口请求：统一使用src/lib中的httpFetch
 ## 多语言要求
 - 支持：中文 / 英文,路由：/zh,/en
 - /admin/*的是后台页面,所有文案固定中文即可，不需要国际化配置。

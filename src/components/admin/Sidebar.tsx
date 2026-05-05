@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Package } from 'lucide-react';
+import { Menu, X, Package, FolderOpen } from 'lucide-react';
 
 interface SidebarProps {
   isMobileOpen: boolean;
@@ -21,6 +21,11 @@ const menuItems: MenuItem[] = [
     label: '产品管理',
     href: '/admin/dashboard',
     icon: <Package className="w-5 h-5" />,
+  },
+  {
+    label: '分类管理',
+    href: '/admin/categories',
+    icon: <FolderOpen className="w-5 h-5" />,
   },
 ];
 
