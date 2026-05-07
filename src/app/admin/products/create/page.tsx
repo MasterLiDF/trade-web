@@ -9,6 +9,7 @@ import { httpFetch } from '@/lib/fetch';
 interface FormData {
   nameZh: string;
   nameEn: string;
+  categoryId: string;
   categoryZh: string;
   categoryEn: string;
   descriptionZh: string;
@@ -36,6 +37,7 @@ interface Category {
 const initialFormData: FormData = {
   nameZh: '',
   nameEn: '',
+  categoryId: '',
   categoryZh: '',
   categoryEn: '',
   descriptionZh: '',
@@ -232,6 +234,7 @@ export default function CreateProductPage() {
       if (selectedCategory) {
         setFormData((prev) => ({
           ...prev,
+          categoryId: selectedCategory.id,
           categoryZh: selectedCategory.nameZh,
           categoryEn: selectedCategory.nameEn,
         }));
@@ -239,6 +242,7 @@ export default function CreateProductPage() {
     } else {
       setFormData((prev) => ({
         ...prev,
+        categoryId: '',
         categoryZh: '',
         categoryEn: '',
       }));
@@ -262,6 +266,7 @@ export default function CreateProductPage() {
         body: JSON.stringify({
           nameZh: formData.nameZh,
           nameEn: formData.nameEn,
+          categoryId: formData.categoryId,
           categoryZh: formData.categoryZh,
           categoryEn: formData.categoryEn,
           descriptionZh: formData.descriptionZh,
@@ -362,13 +367,7 @@ export default function CreateProductPage() {
                 产品分类 <span className="text-red-500">*</span>
               </label>
               <select
-                value={
-                  categories.find(
-                    (cat) =>
-                      cat.nameZh === formData.categoryZh &&
-                      cat.nameEn === formData.categoryEn
-                  )?.id || ''
-                }
+                value={formData.categoryId}
                 onChange={handleCategoryChange}
                 disabled={categoriesLoading}
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-white ${

@@ -7,6 +7,8 @@ import Product from "@/models/Product";
 import Category from "@/models/Category";
 import FilterButtons from "./FilterButtons";
 
+export const dynamic = "force-dynamic";
+
 interface CategoryData {
   id: string;
   nameZh: string;
