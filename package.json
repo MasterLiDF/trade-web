@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "script:register": "tsx src/scripts/registerAdmin.ts"
+    "script:register": "tsx src/scripts/registerAdmin.ts",
+    "script:cleanup-images": "tsx src/scripts/cleanup-unused-images.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
