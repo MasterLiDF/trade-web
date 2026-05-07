@@ -147,8 +147,8 @@ if (isDryRun) {
   console.log('【预览模式】不会实际删除文件\n');
   // 重写删除逻辑为仅显示
   const originalUnlinkSync = fs.unlinkSync;
-  fs.unlinkSync = (filepath: string) => {
-    console.log(`  [预览] 将删除: ${path.basename(filepath)}`);
+  fs.unlinkSync = (filepath: fs.PathLike) => {
+    console.log(`  [预览] 将删除: ${path.basename(filepath.toString())}`);
   };
 }
 

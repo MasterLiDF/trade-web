@@ -16,10 +16,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: "zh" | "en" }>;
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = messages[locale];
+  const t = messages[locale as "zh" | "en"];
 
   return {
     title: t.metadata.title,
@@ -32,15 +32,15 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: "zh" | "en" }>;
+  params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
 
   return (
     <>
-      <Navbar lang={locale} />
+      <Navbar lang={locale as "zh" | "en"} />
       <main className="flex-1">{children}</main>
-      <Footer lang={locale} />
+      <Footer lang={locale as "zh" | "en"} />
     </>
   );
 }

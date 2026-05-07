@@ -7,6 +7,7 @@ import { verifyToken, unauthorizedResponse } from "@/lib/auth";
 interface CreateProductRequest {
   nameZh: string;
   nameEn: string;
+  categoryId: string;
   categoryZh: string;
   categoryEn: string;
   descriptionZh: string;
@@ -19,6 +20,7 @@ interface UpdateProductRequest {
   id: string;
   nameZh?: string;
   nameEn?: string;
+  categoryId?: string;
   categoryZh?: string;
   categoryEn?: string;
   descriptionZh?: string;
@@ -31,6 +33,7 @@ interface ProductResponseData {
   id: string;
   nameZh: string;
   nameEn: string;
+  categoryId: string;
   categoryZh: string;
   categoryEn: string;
   descriptionZh: string;
@@ -55,6 +58,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const {
       nameZh,
       nameEn,
+      categoryId,
       categoryZh,
       categoryEn,
       descriptionZh,
@@ -78,6 +82,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       const response: ApiResponse = {
         success: false,
         message: "产品英文名称不能为空",
+        status: 400,
+      };
+      return NextResponse.json(response);
+    }
+
+    // 验证分类ID
+    if (!categoryId || typeof categoryId !== "string") {
+      const response: ApiResponse = {
+        success: false,
+        message: "产品分类ID不能为空",
         status: 400,
       };
       return NextResponse.json(response);
@@ -157,6 +171,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const product = await Product.create({
       nameZh: nameZh.trim(),
       nameEn: nameEn.trim(),
+      categoryId: categoryId.trim(),
       categoryZh: categoryZh.trim(),
       categoryEn: categoryEn.trim(),
       descriptionZh: descriptionZh.trim(),
@@ -172,6 +187,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         id: product._id.toString(),
         nameZh: product.nameZh,
         nameEn: product.nameEn,
+        categoryId: product.categoryId,
         categoryZh: product.categoryZh,
         categoryEn: product.categoryEn,
         descriptionZh: product.descriptionZh,
@@ -206,6 +222,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { searchParams } = new URL(request.url);
     const keyword = searchParams.get("keyword");
     const id = searchParams.get("id");
+    const categoryId = searchParams.get("categoryId");
 
     // 如果提供了 id，返回单个产品详情
     if (id) {
@@ -224,6 +241,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         id: product._id.toString(),
         nameZh: product.nameZh,
         nameEn: product.nameEn,
+        categoryId: product.categoryId,
         categoryZh: product.categoryZh,
         categoryEn: product.categoryEn,
         descriptionZh: product.descriptionZh,
@@ -252,6 +270,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         { nameEn: { $regex: keyword, $options: "i" } },
       ];
     }
+    if (categoryId) {
+      query.categoryId = categoryId;
+    }
 
     const products = await Product.find(query).sort({ createdAt: -1 });
 
@@ -259,6 +280,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       id: product._id.toString(),
       nameZh: product.nameZh,
       nameEn: product.nameEn,
+      categoryId: product.categoryId,
       categoryZh: product.categoryZh,
       categoryEn: product.categoryEn,
       descriptionZh: product.descriptionZh,
@@ -329,6 +351,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
     const cleanedData: Record<string, unknown> = {};
     if (updateData.nameZh !== undefined) cleanedData.nameZh = updateData.nameZh.trim();
     if (updateData.nameEn !== undefined) cleanedData.nameEn = updateData.nameEn.trim();
+    if (updateData.categoryId !== undefined) cleanedData.categoryId = updateData.categoryId.trim();
     if (updateData.categoryZh !== undefined) cleanedData.categoryZh = updateData.categoryZh.trim();
     if (updateData.categoryEn !== undefined) cleanedData.categoryEn = updateData.categoryEn.trim();
     if (updateData.descriptionZh !== undefined) cleanedData.descriptionZh = updateData.descriptionZh.trim();
@@ -352,6 +375,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
         id: updatedProduct!._id.toString(),
         nameZh: updatedProduct!.nameZh,
         nameEn: updatedProduct!.nameEn,
+        categoryId: updatedProduct!.categoryId,
         categoryZh: updatedProduct!.categoryZh,
         categoryEn: updatedProduct!.categoryEn,
         descriptionZh: updatedProduct!.descriptionZh,

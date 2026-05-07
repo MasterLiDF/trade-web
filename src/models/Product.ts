@@ -3,6 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IProduct extends Document {
   nameZh: string;
   nameEn: string;
+  categoryId: string;
   categoryZh: string;
   categoryEn: string;
   descriptionZh: string;
@@ -26,6 +27,12 @@ const ProductSchema: Schema = new Schema(
       required: [true, '产品英文名称不能为空'],
       trim: true,
       maxlength: [200, '英文产品名称最多200个字符'],
+    },
+    categoryId: {
+      type: String,
+      required: [true, '产品分类ID不能为空'],
+      trim: true,
+      index: true,
     },
     categoryZh: {
       type: String,
